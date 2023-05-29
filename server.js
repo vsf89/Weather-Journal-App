@@ -28,3 +28,23 @@ app.use(express.static('website'));
 const server = app.listen(port, ()=>{
     console.log(`myServer is running on: ${port}`);
 });
+
+// app.get('/website/index.html', function (req, res) {
+// Add a GET route that returns the projectData object in your server code 
+app.get('/', function (req, res) {
+    console.log(req);
+    res.send(projectData);
+  })
+
+/*
+Then, add a POST route that adds incoming data to projectData.
+The POST route should anticipate receiving three pieces of data from the request body
+- temperature
+- date
+- user response
+Make sure your POST route is setup to add each of these values with a key to projectData.
+*/
+    app.post('/', function (req, res) {
+    console.log(req.body);
+    res.send(req.body);
+  })
