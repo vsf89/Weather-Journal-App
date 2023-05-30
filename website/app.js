@@ -11,7 +11,12 @@ let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 document.getElementById('generate').addEventListener('click', performAction);
 function performAction() {
     const zipCode = document.getElementById('zip').value;
-    getResult(baseURL, zipCode, apiKey)
+    const userReaction = document.getElementById('feelings').value;
+    getResult(baseURL, zipCode, apiKey).then(function(data){
+            // Add data
+            console.log(data);
+            postData('/website/index.html', { temperature: data.main.temp, date: data.dt, userResponse: userReaction } );
+          })
 }
 
 
@@ -23,5 +28,25 @@ const getResult = async (baseURL, zipCode, apiKey) => {
         return data;
     } catch (error) {
         console.log("error", error);
+    }
+}
+
+const postData = async ( url = baseURL, data = {})=>{
+    
+    const response = await fetch(url, {
+    method: 'POST',
+    credentials: 'same-origin', 
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data), // body data type must match "Content-Type" header        
+  });
+
+    try {
+      const newData = await response.json();
+             return newData
+    }catch(error) {
+    console.log("error", error);
+    // appropriately handle the error
     }
 }
