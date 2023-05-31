@@ -15,7 +15,9 @@ function performAction() {
     getResult(baseURL, zipCode, apiKey).then(function(data){
             // Add data
             console.log(data);
-            postData('/website/index.html', { temperature: data.main.temp, date: data.dt, userResponse: userReaction } );
+            // new Date(data.dt).toString()
+            postData('/website/index.html', { temperature: data.main.temp, date: newDate, userResponse: userReaction });
+            updateUI();
           })
 }
 
@@ -27,6 +29,7 @@ const getResult = async (baseURL, zipCode, apiKey) => {
         console.log(data)
         return data;
     } catch (error) {
+        
         console.log("error", error);
     }
 }
@@ -49,4 +52,19 @@ const postData = async ( url = baseURL, data = {})=>{
     console.log("error", error);
     // appropriately handle the error
     }
+}
+
+
+const updateUI = async() => {
+const request = await fetch('/all')
+try {
+    const allData = await request.json()
+    document.getElementById('temp').innerText = Math.round(allData[0].temperature) + ' degrees';
+    document.getElementById('date').innerText = allData[0].date;
+    document.getElementById('content').innerText = allData[0].userResponse;
+}
+catch (error){
+    console.log("error", error);
+}
+
 }

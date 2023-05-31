@@ -38,6 +38,12 @@ app.get('/website/index.html', function (req, res) {
     res.send(projectData);
   })
 
+
+  app.get('/all', function (req, res) {
+    console.log(data);
+    res.send(data);
+  })
+
 /*
 Then, add a POST route that adds incoming data to projectData.
 The POST route should anticipate receiving three pieces of data from the request body
@@ -46,10 +52,12 @@ The POST route should anticipate receiving three pieces of data from the request
 - user response
 Make sure your POST route is setup to add each of these values with a key to projectData.
 */
+
+
     app.post('/website/index.html', postData);
     
     function postData(req, res) {
-        console.log("req Body: " + req.body);
+      //  console.log("req Body: " + req.body);
         newEntry = {
             temperature: req.body.temperature,
             date: req.body.date, 
@@ -58,5 +66,5 @@ Make sure your POST route is setup to add each of these values with a key to pro
 
         data.push(newEntry);
         res.send(data);
-        console.log(data);
+       // console.log(data);
   }
