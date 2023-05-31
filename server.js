@@ -27,7 +27,7 @@ app.use(express.static('website'));
 
 
 // Setup Server
-const server = app.listen(port, ()=>{
+const server = app.listen(port, () => {
     console.log(`myServer is running on: ${port}`);
 });
 
@@ -36,13 +36,13 @@ const server = app.listen(port, ()=>{
 app.get('/website/index.html', function (req, res) {
     console.log(req);
     res.send(projectData);
-  })
+})
 
 
-  app.get('/all', function (req, res) {
+app.get('/all', function (req, res) {
     console.log(data);
     res.send(data);
-  })
+})
 
 /*
 Then, add a POST route that adds incoming data to projectData.
@@ -54,17 +54,17 @@ Make sure your POST route is setup to add each of these values with a key to pro
 */
 
 
-    app.post('/website/index.html', postData);
-    
-    function postData(req, res) {
-      //  console.log("req Body: " + req.body);
-        newEntry = {
-            temperature: req.body.temperature,
-            date: req.body.date, 
-            userResponse: req.body.userResponse
-        }
+app.post('/website/index.html', postData);
 
-        data.push(newEntry);
-        res.send(data);
-       // console.log(data);
-  }
+function postData(req, res) {
+    //  console.log("req Body: " + req.body);
+    newEntry = {
+        temperature: req.body.temperature,
+        date: req.body.date,
+        userResponse: req.body.userResponse
+    }
+
+    data.push(newEntry);
+    res.send(data);
+    // console.log(data);
+}
