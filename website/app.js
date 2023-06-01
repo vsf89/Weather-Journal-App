@@ -58,7 +58,7 @@ const updateUI = async () => {
     const request = await fetch('/all')
     try {
         const allData = await request.json()
-        document.getElementById('cityName').innerText = 'City Name: ' + allData.cityName;
+        document.getElementById('cityName').innerText = 'City/Town Name: ' + allData.cityName;
         document.getElementById('temp').innerText = 'Current Temperature: ' + Math.round(allData.temperature) + ' degrees';
         document.getElementById('date').innerText = 'Current Date: ' + allData.date;
         document.getElementById('content').innerText = 'User Reaction: ' + allData.userResponse;
