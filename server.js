@@ -2,8 +2,6 @@
 
 projectData = {};
 
-const data = [];
-
 // Require Express to run server and routes
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -40,8 +38,8 @@ app.get('/website/index.html', function (req, res) {
 
 
 app.get('/all', function (req, res) {
-    console.log(data);
-    res.send(data);
+    console.log(projectData);
+    res.send(projectData);
 })
 
 /*
@@ -61,10 +59,9 @@ function postData(req, res) {
     newEntry = {
         temperature: req.body.temperature,
         date: req.body.date,
-        userResponse: req.body.userResponse
+        userResponse: req.body.userResponse,
+        cityName: req.body.cityName
     }
-
-    data.push(newEntry);
-    res.send(data);
-    // console.log(data);
+    projectData = newEntry;
+    res.send(projectData);
 }

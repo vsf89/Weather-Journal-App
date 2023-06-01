@@ -4,19 +4,18 @@ let baseURL = 'https://api.openweathermap.org/data/2.5/weather';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
-
+let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear(); // getMonth() returns the month from 0 to 11
 
 
 document.getElementById('generate').addEventListener('click', performAction);
 function performAction() {
     const zipCode = document.getElementById('zip').value;
     const userReaction = document.getElementById('feelings').value;
-    getResult(baseURL, zipCode, apiKey).then(function (data) {
+    getResult(baseURL, zipCode, apiKey).then(function (projectData) {
         // Add data
-        console.log(data);
-        // new Date(data.dt).toString()
-        postData('/website/index.html', { temperature: data.main.temp, date: newDate, userResponse: userReaction });
+        console.log(projectData);
+        // new Date(projectData.dt).toString()
+        postData('/website/index.html', { temperature: projectData.main.temp, date: newDate, userResponse: userReaction, cityName: projectData.name });
         updateUI();
     })
 }
@@ -59,9 +58,10 @@ const updateUI = async () => {
     const request = await fetch('/all')
     try {
         const allData = await request.json()
-        document.getElementById('temp').innerText = Math.round(allData[0].temperature) + ' degrees';
-        document.getElementById('date').innerText = allData[0].date;
-        document.getElementById('content').innerText = allData[0].userResponse;
+        document.getElementById('cityName').innerText = 'City Name: ' + allData.cityName;
+        document.getElementById('temp').innerText = 'Current Temperature: ' + Math.round(allData.temperature) + ' degrees';
+        document.getElementById('date').innerText = 'Current Date: ' + allData.date;
+        document.getElementById('content').innerText = 'User Reaction: ' + allData.userResponse;
     }
     catch (error) {
         console.log("error", error);
